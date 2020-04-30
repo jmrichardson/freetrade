@@ -8,4 +8,5 @@ class Kibot():
         self.df['date'] = self.df.date + ' ' + self.df.time
         self.df.drop(columns=['time'], inplace=True)
         self.df['date'] = pd.to_datetime(self.df['date'])
+        self.df.set_index('date', inplace=True)
 
