@@ -57,8 +57,9 @@ class TripleBarierLabeling(BaseEstimator, TransformerMixin):
 
         return self
 
-    def transform(self, X, y=None):
+    def transform(self, X):
         # subsample
         X = X.reindex(self.triple_barrier_info.index)
+        y = self.triple_barrier_info.bin
 
-        return X
+        return [X, y]
