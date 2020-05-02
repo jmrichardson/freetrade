@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import mlfinlab as ml
-from sklearn import preprocessing
+from sklearn.model_selection import train_test_split
 
 
 class Feed:
@@ -9,6 +9,10 @@ class Feed:
     def __init__(self):
         self.X = pd.DataFrame()
         self.y = pd.Series()
+        self.X_train = pd.DataFrame()
+        self.X_test = pd.DataFrame()
+        self.y_train = pd.DataFrame()
+        self.y_test = pd.DataFrame()
 
     def outlierStdRemove(self, std_threshold):
         self.X = self.X[self.X.apply(lambda x: np.abs(x - x.mean()) / x.std() < std_threshold).all(axis=1)]
@@ -58,4 +62,9 @@ class Feed:
 
         self.X = self.X.reindex(triple_barrier_info.index)
         self.y = triple_barrier_info.bin
+
+    def trainTestSplit(self, test_size=.3, random_state=0, shuffle=False):
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y, test_size=test_size,
+            random_state=random_state, shuffle=shuffle)
+
 
